@@ -1,0 +1,138 @@
+<mat-card-header class="edit-header">
+  <div class="header-content">
+    <mat-card-title class="title-text">
+      {{ id ? 'Update Driver' : 'Add Driver' }}
+    </mat-card-title>
+
+    <button class="btn-cancel"
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="goToDriver()">
+      Cancel
+    </button>
+  </div>
+</mat-card-header>
+
+
+
+@if (driverData) {
+  <mat-card class="driver-summary-card">
+
+    <mat-card-header class="driver-name">
+      <mat-card-title>{{ driverData.name }}</mat-card-title>
+      <mat-card-subtitle>#{{ driverData.racingNumber }} · {{ driverData.driverTeam }}</mat-card-subtitle>
+    </mat-card-header>
+
+    @if (driverData.driverImage) {
+      <img mat-card-image [src]="driverData.driverImage" [alt]="driverData.name" />
+    }
+
+    <mat-card-content>
+      <p><strong>Nationality:</strong> {{ driverData.nationality }}</p>
+      <p><strong>Wins:</strong> {{ driverData.wins }}</p>
+      <p><strong>Podiums:</strong> {{ driverData.podiums }}</p>
+      <p><strong>World Championships:</strong> {{ driverData.driverWC }}</p>
+      <p><strong>Date of Birth:</strong> {{ driverData.dob | date:'longDate' }}</p>
+      @if (driverData.driverDES) {
+        <p><strong>Description:</strong> {{ driverData.driverDES }}</p>
+      }
+    </mat-card-content>
+    
+
+  </mat-card>
+}
+
+<form [formGroup]="driverForm" (ngSubmit)="onSubmit()" class="driver-form">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ id ? 'Update Driver' : 'Add Driver' }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="form-column">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="viewer">Viewer</mat-option>
+        <mat-option value="creator">Creator</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Racing Number</mat-label>
+      <input matInput type="number" formControlName="racingNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nationality</mat-label>
+      <input matInput formControlName="nationality" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Driver Image URL</mat-label>
+      <input matInput formControlName="driverImage" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Team</mat-label>
+      <input matInput formControlName="driverTeam" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="driverDES"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Wins</mat-label>
+      <input matInput type="number" formControlName="wins" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Podiums</mat-label>
+      <input matInput type="number" formControlName="podiums" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>World Championships</mat-label>
+      <input matInput type="number" formControlName="driverWC" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput type="date" formControlName="dob" />
+    </mat-form-field>
+
+  </mat-card-content>
+
+    <!-- ACTION BUTTONS -->
+    <mat-card-actions>
+      <button mat-flat-button color="primary" type="submit" [disabled]="driverForm.invalid">
+        {{ id ? 'Update Driver' : 'Add Driver' }}
+      </button>
+
+      <button mat-stroked-button color="warn" type="button" (click)="goToDriver()">
+        Cancel
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</form>

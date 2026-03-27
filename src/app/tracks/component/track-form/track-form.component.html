@@ -1,0 +1,88 @@
+@if (trackData) {
+  <mat-card class="track-summary-card">
+    <mat-card-header>
+      <mat-card-title>{{ trackData.fiaTrackName }}</mat-card-title>
+      <mat-card-subtitle>{{ trackData.circuitName }} — {{ trackData.trackLocation }}</mat-card-subtitle>
+    </mat-card-header>
+
+    @if (trackData.trackLayout) {
+      <img mat-card-image [src]="trackData.trackLayout" [alt]="trackData.fiaTrackName" />
+    }
+
+    <mat-card-content>
+      <p><strong>Length:</strong> {{ trackData.trackLength }}</p>
+      <p><strong>DRS Zones:</strong> {{ trackData.numDRSZones }}</p>
+      <p><strong>Quali FL:</strong> {{ trackData.qualiFL }}</p>
+      <p><strong>Race FL:</strong> {{ trackData.raceFL }}</p>
+    </mat-card-content>
+  </mat-card>
+}
+
+<form [formGroup]="trackForm" (ngSubmit)="onSubmit()" class="track-form">
+
+  <mat-card>
+
+    <mat-card-header class="edit-header">
+      <mat-card-title>
+        {{ id ? 'Update Track' : 'Add Track' }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-form-field appearance="outline">
+        <mat-label>FIA Track Name</mat-label>
+        <input matInput formControlName="fiaTrackName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Track Layout (Image URL)</mat-label>
+        <input matInput formControlName="trackLayout" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Circuit Name</mat-label>
+        <input matInput formControlName="circuitName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Track Location</mat-label>
+        <input matInput formControlName="trackLocation" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Number of DRS Zones</mat-label>
+        <input matInput formControlName="numDRSZones" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Track Length</mat-label>
+        <input matInput formControlName="trackLength" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Qualifying Fastest Lap</mat-label>
+        <input matInput formControlName="qualiFL" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Race Fastest Lap</mat-label>
+        <input matInput formControlName="raceFL" />
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-flat-button color="primary" type="submit">
+        {{ id ? 'Update Track' : 'Add Track' }}
+      </button>
+
+      <button mat-stroked-button color="warn" type="button" (click)="goToTracks()">
+        Cancel
+      </button>
+    </mat-card-actions>
+
+  </mat-card>
+
+</form>
+

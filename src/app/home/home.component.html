@@ -1,0 +1,115 @@
+<div class="hero">
+  <div class="hero-content">
+    <h1>Formula 1 Dashboard</h1>
+    <p>Manage Drivers, Tracks, and Racing Data</p>
+  </div>
+</div>
+
+<section class="home-layout">
+  <div class="race-column">
+    <mat-card class="feature-card race-card">
+      <mat-card-header>
+        <mat-card-title>Next Upcoming Race</mat-card-title>
+        <mat-card-subtitle>Live from the 2026 calendar</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        @if (isLoading) {
+          <div class="loading-state">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Loading next race...</p>
+          </div>
+        } @else if (nextRace) {
+          <div class="race-summary">
+            <span class="race-round">Round {{ nextRace.round }}</span>
+            <h2>{{ nextRace.raceName }}</h2>
+            <p class="circuit-name">{{ nextRace.Circuit.circuitName }}</p>
+            <p class="location">{{ nextRace.Circuit.Location.locality }}, {{ nextRace.Circuit.Location.country }}</p>
+
+            @if (nextRaceDate) {
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="label">Date</span>
+                  <span class="value">{{ nextRaceDate | date:'EEEE, d MMMM y' }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Time</span>
+                  <span class="value">{{ nextRaceDate | date:'HH:mm' }} UTC</span>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="state-text">No upcoming race data is available right now.</p>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="feature-card results-card">
+      <mat-card-header>
+        <mat-card-title>Previous Race Result</mat-card-title>
+        <mat-card-subtitle>Latest completed Grand Prix top 10</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        @if (isLoading) {
+          <div class="loading-state">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Loading previous race...</p>
+          </div>
+        } @else if (previousRace) {
+          <div class="race-summary">
+            <span class="race-round">Round {{ previousRace.round }}</span>
+            <h2>{{ previousRace.raceName }}</h2>
+            <p class="circuit-name">{{ previousRace.Circuit.circuitName }}</p>
+
+            @if (previousRaceDate) {
+              <p class="location">{{ previousRaceDate | date:'d MMMM y' }}</p>
+            }
+          </div>
+
+          <div class="podium-list">
+            @for (result of topTenResults; track result.position) {
+              <div class="podium-item" [ngClass]="'position-' + result.position">
+                <div class="position-badge">{{ result.position }}</div>
+                <div class="podium-driver">
+                  <span class="driver-name">{{ result.Driver.givenName }} {{ result.Driver.familyName }}</span>
+                  <span class="driver-team">{{ result.Constructor.name }}</span>
+                </div>
+                <div class="podium-meta">
+                  <span>{{ result.points }} pts</span>
+                  <span>{{ result.Time?.time || result.status }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="state-text">No previous race result is available right now.</p>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card class="feature-card action-card">
+    <mat-card-header>
+      <mat-card-title>Explore the App</mat-card-title>
+      <mat-card-subtitle>Jump straight into your main sections</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="action-copy">
+        <p>Browse driver profiles, racing records, and team information.</p>
+        <p>Review track details, layouts, and circuit information.</p>
+      </div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="warn" routerLink="/drivers">Drivers</button>
+        <button mat-raised-button color="primary" routerLink="/tracks">Tracks</button>
+      </div>
+
+      @if (hasError) {
+        <p class="state-text warning-text">Race data could not be loaded from the external API.</p>
+      }
+    </mat-card-content>
+  </mat-card>
+</section>

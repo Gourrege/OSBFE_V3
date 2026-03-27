@@ -1,0 +1,106 @@
+<div class="admin-header">
+  <div>
+    <h1>Admin Dashboard</h1>
+    <p>Overview of user roles and account status.</p>
+  </div>
+
+  <div class="header-actions">
+    <a mat-raised-button color="primary" routerLink="/admin/users">Manage Users</a>
+    <a mat-stroked-button color="primary" routerLink="/admin/users/new">Add User</a>
+  </div>
+</div>
+
+@if (isLoading()) {
+  <p class="state-text">Loading dashboard...</p>
+} @else if (stats()) {
+  <div class="stats-grid">
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Total Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="stats-value">{{ totalUsers() }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Active Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="stats-value">{{ activeUsers() }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stats-card">
+      <mat-card-header>
+        <mat-card-title>Suspended Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="stats-value">{{ suspendedUsers() }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="role-grid">
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>User Roles</mat-card-title>
+        <mat-card-subtitle>Distribution across all {{ totalUsers() }} users</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="chart-content">
+        <div class="pie-chart" [ngStyle]="roleChartStyle()">
+          <div class="chart-center">
+            <span class="chart-total">{{ totalUsers() }}</span>
+            <span class="chart-label">Users</span>
+          </div>
+        </div>
+
+        <div class="chart-legend">
+          @for (segment of roleChartSegments(); track segment.label) {
+            <div class="legend-item">
+              <span class="legend-color" [style.background]="segment.color"></span>
+              <div class="legend-text">
+                <span class="legend-label">{{ segment.label }}</span>
+                <span class="legend-meta">
+                  {{ segment.value }} users · {{ getPercentage(segment.value, totalUsers()) }}%
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Account Status</mat-card-title>
+        <mat-card-subtitle>How many users are active or suspended</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="chart-content">
+        <div class="pie-chart" [ngStyle]="statusChartStyle()">
+          <div class="chart-center">
+            <span class="chart-total">{{ totalUsers() }}</span>
+            <span class="chart-label">Users</span>
+          </div>
+        </div>
+
+        <div class="chart-legend">
+          @for (segment of statusChartSegments(); track segment.label) {
+            <div class="legend-item">
+              <span class="legend-color" [style.background]="segment.color"></span>
+              <div class="legend-text">
+                <span class="legend-label">{{ segment.label }}</span>
+                <span class="legend-meta">
+                  {{ segment.value }} users · {{ getPercentage(segment.value, totalUsers()) }}%
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}

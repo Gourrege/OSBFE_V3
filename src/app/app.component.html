@@ -1,0 +1,44 @@
+<mat-toolbar color="" class="navbar">
+
+  <a class="app-title" routerLink="" routerLinkActive="active-link">F1 APP</a>
+
+  <span class="spacer"></span>
+
+  <a mat-raised-button routerLink="/drivers" routerLinkActive="active-link">
+    Drivers
+  </a>
+
+  <span class="btn_spacer"></span>
+
+  <a mat-raised-button routerLink="/tracks" routerLinkActive="active-link">
+    Tracks
+  </a>
+
+  <span class="btn_spacer"></span>
+
+  @if ((authService.currentUser$ | async)?.role === 'admin') {
+    <a mat-raised-button routerLink="/admin" routerLinkActive="active-link">
+      Admin
+    </a>
+
+    <span class="btn_spacer"></span>
+  }
+
+  @if (authService.isAuthenticated$ | async) {
+
+  <a mat-raised-button (click)="logout()">
+    Logout
+  </a>
+
+} @else {
+
+  <a mat-raised-button routerLink="/login" routerLinkActive="active-link">
+    Login
+  </a>
+
+}
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+

@@ -1,0 +1,123 @@
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* spacing between fields */
+}
+
+
+.driver-summary-card {
+  max-width: 500px;       /* Make it nicely sized */
+  margin: 0 auto 2rem;    /* auto left & right = centered */
+  text-align: center;     /* centers text and image */
+  padding-bottom: 1rem;
+
+  img {
+    max-height: 100%;
+    width: 300px;
+    margin: 0 auto 2rem;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+
+.edit-header {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;      /* stack title + button */
+  align-items: center;         /* center both horizontally */
+  width: 100%;
+  text-align: center;
+}
+
+.title-text {
+  font-size: 2rem;             /* BIG TITLE */
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.btn-cancel {
+  min-width: 140px;
+}
+
+
+.driver-name
+  {
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+
+.driver-form {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+
+  mat-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+
+    mat-card-header {
+      text-align: center;
+      margin-bottom: 1rem;
+
+      mat-card-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+    }
+
+    mat-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      mat-form-field {
+        width: 100%;
+      }
+
+      textarea {
+        min-height: 120px;
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding-top: 1rem;
+
+      button {
+        min-width: 140px;
+      }
+    }
+  }
+}
+
+/* Slightly improve spacing on mobile */
+@media (max-width: 600px) {
+  .driver-form {
+    padding: 1rem;
+
+    mat-card {
+      padding: 0.5rem;
+
+      mat-card-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      mat-card-actions {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

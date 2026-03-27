@@ -1,0 +1,55 @@
+<button mat-raised-button color="primary" (click)="goToAddTracks()">
+  Add Track
+</button>
+
+<div class="container responsive-grid">
+
+  @if (tracks$ | async; as tracks) {
+
+  @for (track of tracks; track track._id) {
+
+    <mat-card class="track-card">
+
+    <mat-card-header>
+      <mat-card-title>{{ track.fiaTrackName }}</mat-card-title>
+      <mat-card-subtitle>{{ track.circuitName }} — {{ track.trackLocation }}</mat-card-subtitle>
+    </mat-card-header>
+
+    @if (track.trackLayout) {
+      <img mat-card-image [src]="track.trackLayout" [alt]="track.fiaTrackName" />
+    }
+
+    <mat-card-content>
+
+        <p><strong>Length:</strong> {{ track.trackLength }}</p>
+
+        <p><strong>DRS Zones:</strong> {{ track.numDRSZones }}</p>
+
+        <p><strong>Qualifying Fastest Lap:</strong> {{ track.qualiFL }}</p>
+
+        <p><strong>Race Fastest Lap:</strong> {{ track.raceFL }}</p>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-stroked-button color="warn" (click)="deleteTrack(track._id!)">
+          Delete
+        </button>
+
+        <button mat-stroked-button color="primary" (click)="updateExisting(track._id!)">
+          Edit
+        </button>
+      </mat-card-actions>
+
+    </mat-card>
+
+
+  }
+
+  } @else {
+
+    <p>Loading tracks...</p>
+
+  }
+
+</div>
